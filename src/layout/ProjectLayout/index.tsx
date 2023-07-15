@@ -1,27 +1,26 @@
 import Footer from "@/components/Footer";
 import TopNavBar from "@/components/Navigation/TopNavBar";
+import Image from "next/image";
 import { ReactNode } from "react";
 
-interface Props{
-    children?: ReactNode;
+interface Props {
+  children?: ReactNode;
 }
 
 const ProjectLayout = ({ children }: Props) => {
-
-
   return (
     <>
       <div>
         <div>
-        <TopNavBar/>
+          <div>
+            <TopNavBar />
+          </div>
         </div>
+        <div>{children}</div>
         <div>
-        {children}
+          <Footer />
         </div>
-        <div>
-        <Footer/>
-       </div>
-        </div>
+      </div>
     </>
   );
 };

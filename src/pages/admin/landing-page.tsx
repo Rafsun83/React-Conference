@@ -1,5 +1,6 @@
 import Image from "next/image";
-import ContentImage from "../../asstes/images/Content.png";
+import ContentImage from "../../asstes/images/Hero.png";
+// import ContentImage from '../../asstes/images/Content.png'
 import SponsorList from "@/components/Sponsor";
 import ConferenceList from "@/components/Conference";
 import { TypedDocumentNode, gql, useQuery } from "@apollo/client";
@@ -76,14 +77,14 @@ const Landingpage = () => {
   return (
     <div>
       <div className="flex items-center justify-center">
-        <div className="hidden sm:block">
+        <div className="hidden sm:block max-h-[100vh]">
           <Image src={ContentImage} alt={""} />
         </div>
         <div className="block sm:hidden">
           <Image src={ContentSmall} alt={""} />
         </div>
       </div>
-      <div className="flex justify-center items-center py-[50px]">
+      <div className="flex justify-center items-center pb-[50px]">
         <div className="">
           <div>
             <ConferenceList data={data} loading ={loading} />
