@@ -11,7 +11,14 @@ import GoldImage from '../../asstes/images/Gold.png'
 import SilverImage from '../../asstes/images/Silver.png'
 import BronzeImage from '../../asstes/images/Bronze.png'
 
-const SponsorList = () => {
+interface Props {
+  data?:any
+}
+
+const SponsorList = ({ data }: Props) => {
+  
+  // have no data in goldSponsorShip, silverSponsorShip and bronzeSponsorShip That's why don't bind this sponsor section data
+
   return (
     <div className=" py-[100px] px-[15px]">
       <h1 className="text-[48px] font-bold flex items-center justify-center">

@@ -96,7 +96,7 @@ const Landingpage = () => {
         <div className="flex justify-center items-center">
           <div className="">
             <div>
-              <SponsorList />
+              <SponsorList data={data} />
             </div>
           </div>
         </div>
