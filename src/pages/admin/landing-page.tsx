@@ -6,7 +6,7 @@ import { TypedDocumentNode, gql, useQuery } from "@apollo/client";
 import ContentSmall from "../../asstes/images/ContentSmall.png";
 
 
-const FILMS_QUERY: TypedDocumentNode<ConferencesDataTypes[]> = gql`
+const FILMS_QUERY = gql`
   {
     conferences {
       id
@@ -71,8 +71,7 @@ const FILMS_QUERY: TypedDocumentNode<ConferencesDataTypes[]> = gql`
 
 
 const Landingpage = () => {
-  const { data, loading, error } = useQuery<ConferencesDataTypes[]>(FILMS_QUERY);
-  // const conferencesData: ConferencesDataTypes[] = data?.conferences || [];
+  const { data, loading, error } = useQuery(FILMS_QUERY);
   if (error) return <pre>{error.message}</pre>;
   return (
     <div>

@@ -61,3 +61,6 @@ type Conferences = {
     conferences: Conferences[] | [];
   }
   
+type confereceType = {
+  conferences: Conferences[];
+  }
