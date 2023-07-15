@@ -1,80 +1,55 @@
 import React from "react";
 import Image from "next/image";
 
-import SpeakerImage from "../../asstes/images/speaker1.png";
-import SpeakerImage2 from "../../asstes/images/speaker2.png";
-import SpeakerImage3 from "../../asstes/images/speaker3.png";
-import Facebook from "@/asstes/icon/Facebook";
 import SpeakerTweet from "@/asstes/icon/SpeakerTweet";
 import SpeakerLinkedin from "@/asstes/icon/SpeakerLinkedin";
 import SpeakerGlobal from "@/asstes/icon/SpeakerGlobal";
 import SpeakerGit from "@/asstes/icon/SpeakerGit";
+import Link from "next/link";
 
-const SpeakerList = () => {
+interface Props {
+  data?: any;
+}
+
+const SpeakerList = ({ data }: Props) => {
   return (
     <div>
-      <div className="mb-3">
-        <div className="bg-white p-5 rounded flex gap-3">
-          <Image src={SpeakerImage} alt={""} />
-          <div className="sm:flex block items-baseline">
-            <div className="">
-              <div className="mb-5 sm:flex block items-baseline justify-between">
-                <p className="text-xl font-bold ">Ronald Richards</p>
-                <div className="flex items-center gap-4">
-                  <SpeakerTweet />
-                  <SpeakerLinkedin />
-                  <SpeakerGlobal />
-                  <SpeakerGit />
-                </div>
-              </div>
+      {data?.map((item: any, index: any) => (
+        <>
+          <div key={index} className="mb-3">
+            <div className="bg-white p-5 rounded flex gap-3">
+              <Image src={item.image.url} width={140} height={140} alt={""} />
+              <div className="sm:flex block items-baseline">
+                <div className="">
+                  <div className="mb-5 sm:flex block items-baseline justify-between">
+                    <p className="text-xl font-bold ">{item.name}</p>
+                    <div className="flex items-center gap-4">
+                      <Link href={item.social.twitter || ''}>
+                      <SpeakerTweet />
+                      </Link>
+                      <Link href={item.social.linkedin || ''}>
+                      <SpeakerLinkedin />
+                      </Link>
+                      <Link href={item.social.googleMaps || ''}>
+                      <SpeakerGlobal />
+                      </Link>
+                      <Link href={item.social.github || ''}>
+                        
+                      <SpeakerGit />
+                      </Link>
+                     
+                    </div>
+                  </div>
 
-              <p>Lorem ipsum dolor sit amet, con sec tetur ad.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mb-3">
-        <div className="bg-white p-5 rounded flex gap-3">
-          <Image src={SpeakerImage2} alt={""} />
-          <div className="sm:flex block items-baseline">
-            <div className="">
-              <div className="sm:flex block items-baseline justify-between mb-5">
-                <p className="text-xl font-bold">Ronald Richards</p>
-                <div className="flex items-center gap-4">
-                  <SpeakerTweet />
-                  <SpeakerLinkedin />
-                  <SpeakerGlobal />
-                  <SpeakerGit />
+                  <p>{item.aboutShort}</p>
                 </div>
               </div>
-              <p>Lorem ipsum dolor sit amet, con sec tetur ad.</p>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="mb-3">
-        <div className="bg-white p-5 rounded flex gap-3">
-          <Image src={SpeakerImage3} alt={""} />
-          <div className="sm:flex block items-baseline">
-            <div className="">
-              <div className="mb-5 sm:flex block items-baseline justify-between">
-                <p className="text-xl font-bold">Ronald Richards</p>
-                <div className="flex items-center gap-4">
-                  <SpeakerTweet />
-                  <SpeakerLinkedin />
-                  <SpeakerGlobal />
-                  <SpeakerGit />
-                </div>
-              </div>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et
-                condimentum lectus in vel pellentesque arcu non odio. Ut dis eu
-                dolor ac tellus vitae ut..
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+        </>
+      ))}
+      
+      
     </div>
   );
 };

@@ -1,27 +1,29 @@
 import Image from "next/image";
 import ContentImage from "../../asstes/images/Content.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Strome from "@/asstes/icon/Strome";
 import Marker from "@/asstes/icon/Marker";
+import Link from "next/link";
+import Loader from "../Loader";
 
 interface Props {
   step?: [];
   activeStep?: any;
 }
 
-const ConferenceList = () => {
-  const steps = [
-    "Freezing Edge 2023",
-    "Design systems for beginners",
-    "Web Components - Write once & run ",
-    "Accessibility testing for developers",
-    "The weird things about React",
-  ];
+interface Data {
+  data?: any;
+  loading?: boolean;
+}
 
+
+
+const ConferenceList = ({data, loading}:Data) => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
+  const handleNext = (value: string) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
   };
 
   const handleBack = () => {
@@ -39,16 +41,17 @@ const ConferenceList = () => {
           Conferences
         </h1>
       </div>
-
-      {/* className="flex flex-col max-w-md mx-auto" */}
-      <div>
+      {
+        loading ? <div className="flex items-center justify-center">
+          <Loader/>
+        </div> :  <div>
         <div className="space-y-3 w-full">
-          {steps.map((label, index) => (
+          {data?.conferences?.map((item: any, index: any) => (
             <div key={index} className="flex max-w-full justify-center">
               <div className="hidden sm:block">
                 {index % 2 === 0 ? (
-                  <button onClick={handleNext}>
-                    <a href="/admin/conferenceDetails">
+                  <button onClick={() => handleNext(item.id)}>
+                    <Link href={`/admin/${item.id}`}>
                       <div
                         className="mr-10 bg-[#F9FAFB] w-[480px] h-[104px] border-t-4 rounded-t-[8px]"
                         style={{
@@ -61,22 +64,22 @@ const ConferenceList = () => {
                             <div>
                               <p className="text-lg font-medium flex items-center gap-2">
                                 {" "}
-                                {label}
+                                {item.name}
                               </p>
                               <p className=" text-[#617187] font-normal text-xs pt-2">
-                                The edge ist bleeding, it freezing!
+                                {item.slogan}
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </button>
                 ) : (
                   <div className="w-[480px] mr-10">
                     <div className="p-[18px]">
                       <p className="text-end text-[#617187] text-xs">
-                        2 September, 2023{" "}
+                        {item.startDate}
                       </p>
                     </div>
                   </div>
@@ -103,15 +106,15 @@ const ConferenceList = () => {
                       ? "border-[#FFC93E]"
                       : "border-[#CDCDCD]"
                   } h-[100px] ml-[15px] mt-3 ${
-                    index + 1 === steps.length ? "hidden" : "block"
+                    index + 1 === data?.conferences.length ? "hidden" : "block"
                   }`}
                 ></p>
               </div>
 
               <div className="hidden sm:block">
                 {index % 2 === 1 ? (
-                  <button onClick={handleNext}>
-                    <a href="/admin/conferenceDetails">
+                  <button onClick={() => handleNext(item.id)}>
+                    <Link href={`/admin/${item.id}`}>
                       <div
                         className="ml-10 bg-[#F9FAFB] w-[480px] h-[104px] border-t-4 rounded-t-[8px]"
                         style={{
@@ -124,38 +127,34 @@ const ConferenceList = () => {
                             <div>
                               <p className="text-lg font-medium flex items-center gap-2">
                                 {" "}
-                                {label}
+                                {item.name}
                               </p>
                               <p className=" text-[#617187] font-normal text-xs pt-2">
-                                The edge ist bleeding, it freezing!
+                                {item.slogan}
                               </p>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   </button>
                 ) : (
                   <div className="w-[480px] ml-10">
                     <div className="p-[18px]">
-                      <p className="text-[#617187] text-xs">
-                        2 September, 2023{" "}
-                      </p>
+                      <p className="text-[#617187] text-xs">{item.startDate}</p>
                     </div>
                   </div>
                 )}
               </div>
 
-                  <div className="block sm:hidden">
-                  <div className="w-[280px] ml-5 sm:ml-10">
-                    <div className="p-[10px]">
-                      <p className="text-[#617187] text-xs">
-                        2 September, 2023{" "}
-                      </p>
-                    </div>
+              <div className="block sm:hidden">
+                <div className="w-[280px] ml-5 sm:ml-10">
+                  <div className="p-[10px]">
+                    <p className="text-[#617187] text-xs">{item.startDate}</p>
                   </div>
-                <button onClick={handleNext}>
-                  <a href="/admin/conferenceDetails">
+                </div>
+                <button onClick={() => handleNext(item.id)}>
+                  <Link href={`/admin/${item.id}`}>
                     <div
                       className="ml-5 sm:ml-10 bg-[#F9FAFB] w-[280px] h-[104px] border-t-4 rounded-t-[8px]"
                       style={{
@@ -168,16 +167,16 @@ const ConferenceList = () => {
                           <div>
                             <p className="text-lg font-medium flex items-center gap-2">
                               {" "}
-                              {label}
+                              {item.name}
                             </p>
                             <p className=" text-[#617187] font-normal text-xs pt-2">
-                              The edge ist bleeding, it freezing!
+                              {item.slogan}
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 </button>
               </div>
             </div>
@@ -209,6 +208,8 @@ const ConferenceList = () => {
           )}
         </div> */}
       </div>
+      }
+     
     </div>
   );
 };
