@@ -65,7 +65,7 @@ const query = gql`
 `;
 
 const ConferenceDetails = () => {
-  const [activeCard, setActiveCard] = useState<string>();
+  const [activeCard, setActiveCard] = useState<string>('');
 
   const router = useRouter();
   const { id } = router.query;

@@ -18,13 +18,21 @@ const DragDrop = ({activeCard, setActiveCard}: props) => {
     { id: "3", name: "Schedule" },
     { id: "4", name: "Sponsors" },
   ]);
+
+  const handleMouseEnter = (value: string) => {
+    if (setActiveCard) {
+      setActiveCard(value)  
+    }
+    
+  }
+
   return (
     <div>
     <SortableList
       items={items}
       setItems={setItems}
       itemRender={({ item }: ItemRenderProps) => (
-        <button id="my-Click" onMouseEnter={() => setActiveCard(item.id)} >
+        <button onMouseEnter={() => handleMouseEnter(item.id)} >
           <div
           className={`min-w-[365px] w-full h-[72px] border mb-[32px] rounded border-gray-200 ${
             activeCard === item.id ? "bg-[#FFC93E]" : "bg-white"

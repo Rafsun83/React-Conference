@@ -6,11 +6,6 @@ import Marker from "@/asstes/icon/Marker";
 import Link from "next/link";
 import Loader from "../Loader";
 
-interface Props {
-  step?: [];
-  activeStep?: any;
-}
-
 interface Data {
   data?: any;
   loading?: boolean;
@@ -19,9 +14,9 @@ interface Data {
 
 
 const ConferenceList = ({data, loading}:Data) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState<number>(0);
 
-  const handleNext = (value: string) => {
+  const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
   };
@@ -50,7 +45,7 @@ const ConferenceList = ({data, loading}:Data) => {
             <div key={index} className="flex max-w-full justify-center">
               <div className="hidden sm:block">
                 {index % 2 === 0 ? (
-                  <button onClick={() => handleNext(item.id)}>
+                  <button onClick={handleNext}>
                     <Link href={`/admin/${item.id}`}>
                       <div
                         className="mr-10 bg-[#F9FAFB] w-[480px] h-[104px] border-t-4 rounded-t-[8px]"
@@ -113,7 +108,7 @@ const ConferenceList = ({data, loading}:Data) => {
 
               <div className="hidden sm:block">
                 {index % 2 === 1 ? (
-                  <button onClick={() => handleNext(item.id)}>
+                  <button onClick={handleNext}>
                     <Link href={`/admin/${item.id}`}>
                       <div
                         className="ml-10 bg-[#F9FAFB] w-[480px] h-[104px] border-t-4 rounded-t-[8px]"
@@ -153,7 +148,7 @@ const ConferenceList = ({data, loading}:Data) => {
                     <p className="text-[#617187] text-xs">{item.startDate}</p>
                   </div>
                 </div>
-                <button onClick={() => handleNext(item.id)}>
+                <button onClick={handleNext}>
                   <Link href={`/admin/${item.id}`}>
                     <div
                       className="ml-5 sm:ml-10 bg-[#F9FAFB] w-[280px] h-[104px] border-t-4 rounded-t-[8px]"
