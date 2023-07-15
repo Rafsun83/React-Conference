@@ -1,6 +1,6 @@
 import ProjectLayout from "@/layout/ProjectLayout";
-import DashboardLayout from "@/layout/ProjectLayout";
 import "@/styles/globals.css";
+import 'tailwindcss/tailwind.css';
 import type { AppProps, NextAppProps } from "next/app";
 
 function getDefaultLayout(children: any) {
