@@ -18,7 +18,7 @@
 
 body {
   color: black;
-  
+  overflow-x: hidden;
   /* color: rgb(var(--foreground-rgb)); */
   /* background: linear-gradient(
       to bottom,
@@ -27,15 +27,69 @@ body {
     )
     rgb(var(--background-start-rgb)); */
 }
-.topnav{
-  background-image: url('../asstes/images/Hero.png');
+.topnav {
+  background-image: url("../asstes/images/Hero.png");
   /* height: 135vh; */
   /* background-size: cover;
   background-position: center; */
   background-repeat: no-repeat;
   /* width: 100%; */
- 
+
   /* height: 60px;
   padding: 10px; */
 }
 
+/* .resizable-text-box {
+  position: relative;
+  border: 1px solid #ccc;
+  resize: both;
+  overflow: hidden;
+  background-color: white;
+} */
+
+/* For pdf */
+.react-pdf__Page {
+  margin-top: 10px;
+}
+.react-pdf__Page__textContent {
+  border: 1px solid darkgrey;
+  box-shadow: 5px 5px 5px 1px #ccc;
+  border-radius: 5px;
+}
+
+.react-pdf__Page__annotations.annotationLayer {
+  padding: 20px;
+}
+
+.react-pdf__Page__canvas {
+  margin: 0 auto;
+}
+
+/* For all pages */
+.all-page-container {
+  height: 100%;
+  max-height: 500px;
+  overflow: auto;
+  /* position: relative; */
+  padding: 20px;
+}
+
+.container {
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+  outline: 1px solid gray;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.3s;
+  transform-origin: 0 0;
+}
+
+img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}

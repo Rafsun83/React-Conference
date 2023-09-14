@@ -21,7 +21,7 @@ const Footer = () => {
               <Facebook />
               <Global />
             </div>
-            <p className="text-white text-base pt-6">© 2023 Lemonhive. All rights reserved.</p>
+            {/* <p className="text-white text-base pt-6">© 2023 Lemonhive. All rights reserved.</p> */}
           </div>
         </div>
       </div>
