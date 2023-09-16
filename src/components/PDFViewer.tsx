@@ -4,6 +4,12 @@ import { useIntersectionObserver } from "@wojtekmaj/react-hooks";
 import DraggableText from "./DragableText";
 import { PDFDocument, rgb } from "pdf-lib";
 import { blobToURL } from "@/utils/Utils";
+import {
+  TransformWrapper,
+  TransformComponent,
+  useControls,
+  ReactZoomPanPinchRef,
+} from "react-zoom-pan-pinch";
 
 // Set the worker URL for PDF.js
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -141,8 +147,61 @@ function PDFViewer({
     },
     []
   );
+  const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
+  const zoomToImage = () => {
+    if (transformComponentRef.current) {
+      const { zoomToElement } = transformComponentRef.current;
+      zoomToElement("imgExample");
+    }
+  };
+
+  const handleWheel = (ref: any) => {
+    console.log("event---", ref)
+
+  }
 
   // zooming
+  const Controls = () => {
+    const { zoomIn, zoomOut, resetTransform } = useControls();
+    return (
+      <>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+          }}
+        >
+          <button
+            style={{
+              border: "1px solid gray",
+              padding: "3px",
+            }}
+            onClick={() => zoomIn()}
+          >
+            Zoom In
+          </button>
+          <button
+            style={{
+              border: "1px solid gray",
+              padding: "3px",
+            }}
+            onClick={() => zoomOut()}
+          >
+            Zoom Out
+          </button>
+          <button
+            style={{
+              border: "1px solid gray",
+              padding: "3px",
+            }}
+            onClick={() => resetTransform()}
+          >
+            Reset
+          </button>
+        </div>
+      </>
+    );
+  };
 
   return (
     <div>
@@ -169,14 +228,14 @@ function PDFViewer({
             Next
           </button>
 
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3">
             <button onClick={handleZomIn} className="border p-2">
               ZoomIn {zoom}{" "}
             </button>
             <button onClick={handleZomOut} className="border p-2">
               ZoomOut {zoom}
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       <div>
@@ -188,25 +247,54 @@ function PDFViewer({
       </div>
       {pdf ? (
         <div
-          // className="relative"
-          ref={documentRef}
+          // ref={documentRef}
           // style={styles.documentBlock}
-          // style={{
-          //   height: "100vh",
-          //   overflow: "auto",
-          //   position: "relative",
-          //   padding: "20px",
-          // }}
+        
         >
-          {/* <div> */}
-          <Document
-            file={pdfUrl}
-            // options={{ workerSrc: "/pdfUrl.worker.js" }}
-            onLoadSuccess={onDocumentLoadSuccess}
-            className="all-page-container relative"
+          <TransformWrapper
+            // initialScale={1}
+            // initialPositionX={200}
+            // initialPositionY={100}
+            ref={transformComponentRef}
+            // onInit={handleWheel}
+            // zoomAnimation={{
+            //   disabled:true
+            // }}
+            disablePadding={true}
+            smooth={true}
+            limitToBounds={true}
+            doubleClick={{
+              disabled:true
+            }}
+            wheel={{
+              wheelDisabled: false,
+              disabled: true,
+              touchPadDisabled:false
+            }}
+            alignmentAnimation={{
+            disabled:false
+            }}
+            velocityAnimation={{
+              disabled: true,
+              equalToMove: true
+            }}
+            
           >
-            {draging}
-            {/* {textInputVisible ? (
+            <Controls />
+            <TransformComponent>
+              <Document
+                file={pdfUrl}
+                // options={{ workerSrc: "/pdfUrl.worker.js" }}
+                onLoadSuccess={onDocumentLoadSuccess}
+                className="all-page-container"
+              >
+                {draging}
+                {/* <div onClick={zoomToImage}>
+                
+                </div> */}
+               
+
+                {/* {textInputVisible ? (
               <DraggableText
                 // initialText={
                 //   textInputVisible === "date" ? dayjs().format("M/d/YYYY") : null
@@ -257,18 +345,28 @@ function PDFViewer({
                 }}
               />
             ) : null} */}
-            {Array.from(new Array(numPages), (el, index) => (
-              <PageWithObserver
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                setPageVisibility={setPageVisibility}
-                width={width}
-                setPageDetails={setPageDetails}
-                zoom={zoom}
-              />
-            ))}
-          </Document>
-          {/* </div> */}
+
+                {Array.from(new Array(numPages), (el, index) => (
+                  <>
+                    {/* <TransformWrapper>
+                      <Controls />
+                      <TransformComponent> */}
+                        <PageWithObserver
+                          key={`page_${index + 1}`}
+                          pageNumber={index + 1}
+                          setPageVisibility={setPageVisibility}
+                          width={width}
+                          setPageDetails={setPageDetails}
+                          zoom={zoom}
+                    />
+                     {/* <div onClick={zoomToImage}>Example text</div> */}
+                      {/* </TransformComponent>
+                    </TransformWrapper> */}
+                  </>
+                ))}
+              </Document>
+            </TransformComponent>
+          </TransformWrapper>
         </div>
       ) : null}
     </div>
